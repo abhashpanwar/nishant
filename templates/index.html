@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+
+        .left-side
+        {
+            background-color:#a3a8ac;
+            background-size:100% auto;
+            background-position: left top;
+            min-height:97.2vh;
+        }
+        .bg-road
+        {
+            background-size:100% auto;
+            background-image: url({{url_for('static',filename='road.jpg')}});
+            min-height:97.2vh;
+            z-index:-1;
+        }
+        .main-heading
+        {
+            color:#df2e4a;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px #fff;
+        }
+        .sub-heading
+        {
+            color:#951c1f;
+            font-weight: 700;
+            text-shadow: 2px 2px 10px lightblue;
+            font-size: 20px;
+        }
+        .padding-right-0{ /*padding-right: 0px;*/}
+        .header-content
+        {
+            margin-top: 80px;
+        }
+        .image-car
+        {
+            right: -115px;
+            position: absolute;
+        }
+        .steps
+        {
+            position: relative;
+            font-size: 25px;
+            color:yellow;
+            -webkit-text-stroke: 1px;
+        }
+        .box-footer
+        {
+            border: solid 1px white;
+
+            padding:10px;
+        }
+        .right-heading
+        {
+            color:#df2e4a;
+            font-weight: bold;
+        }
+        .price
+        {
+            border: 2px dashed black;
+        }
+    </style>
+<!--
+
+-->
+<div class="container-fluid row">
+    <div class="col-md-4  left-side">
+        <header class="header-content">
+            <center>
+                <h1 class="main-heading">Used Cars Price Prediction<br>
+                    <span class="sub-heading">(Using Machine Learning)</span>
+                </h1>
+
+            </center>
+        </header>
+        <!---->
+        <br>
+        <div class="steps">
+            <ul >
+                <li>EDA</li>
+                <li>Data Cleaning</li>
+                <li>Feature Engineering</li>
+                <li>Training different models</li>
+                <li>Testing</li>
+                <li>Deployment</li>
+            </ul>
+        </div><br><br><br>
+        <div class="box-footer">
+            <span><b>Project By- </b><a style="color: inherit;" href="https://www.linkedin.com/in/nishan-karki-b8b444179/"> <u><b style="color:blue">Nishan Karki</b></u></a></span> <br>
+            <center><span>Thank you for visiting | Click on my name to see my linkedin</span></center>
+        </div>
+    </div>
+    <div class="col-md-1 bg-road"></div>
+    <div class="col-md-7">
+        <header class="right-heading">
+            <center><h1>Predict Car Price <small>Please fill the form below</small></h1></center>
+        </header>
+        <hr>
+        {% if type==1 %}
+        <div class="price">
+            <center><h1>Estimated price of your car is <b>{{price}}USD</b></h1></center>
+        </div>
+        <br>
+        {% endif %}
+        <form action="/predict" method="POST">
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="exampleInputEmail1">Select Manufacturer:</label>
+                    <select class="form-control" name="manufacturer">{%  for i in data.manufacturer%} <option value="{{data.manufacturer[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="exampleInputEmail1">Select Condition:</label>
+                    <select class="form-control" name="condition">{%  for i in data.condition %} <option value="{{data.condition[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="exampleInputEmail1">Select Title Status:</label>
+                    <select class="form-control" name="title_status">{%  for i in data.title_status%} <option value="{{data.title_status[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="fuel">Select type:</label>
+                    <select class="form-control" name="type">{%  for i in data.type %} <option value="{{data.type[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+
+                <div class="col-md-4 form-group">
+                    <label for="transmission">Select transmission:</label>
+                    <select class="form-control" name="transmission">{%  for i in data.transmission%} <option value="{{data.transmission[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="fuel">Select fuel type:</label>
+                    <select class="form-control" name="fuel">{%  for i in data.fuel%} <option value="{{data.fuel[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="fuel">Select drive:</label>
+                    <select class="form-control" name="drive">{%  for i in data.drive%} <option value="{{data.drive[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="cylinders">Select cylinders:</label>
+                    <select class="form-control" name="cylinders">{%  for i in data.cylinders%} <option value="{{data.cylinders[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="size">Select color:</label>
+                    <select class="form-control" name="paint_color">{%  for i in data.paint_color%} <option value="{{data.paint_color[i]}}">{{i}}</option> {%endfor%}</select> <br/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="fuel">Enter purchased year:</label>
+                    <input type="text" class="form-control" name="year" required/>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="cylinders">Enter odometer (in miles):</label>
+                    <input type="text" class="form-control" name="odometer"  required/>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-danger" name="submit" value="SELL"/>
+            <a href="/" class="btn btn-info">RESET</a>
+        </form>
+    </div>
+</div>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
