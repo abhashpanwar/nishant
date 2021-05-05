@@ -25,7 +25,8 @@ def home():
 
 @app.route("/predict",methods=['POST'])
 def predict():
-
+	
+    import gzip
     #load model for scalling
     standardscaler= pickle.load(open(config.scaler_model, 'rb'))
 
